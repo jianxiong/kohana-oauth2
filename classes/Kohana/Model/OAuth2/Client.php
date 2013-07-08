@@ -32,7 +32,7 @@ class Kohana_Model_OAuth2_Client
 	 */
 	public static function find_client($client_id, $client_secret = NULL)
 	{
-		$query = db::select('*')->from('oauth2_clients')->where(
+		$query = DB::select('*')->from('oauth2_clients')->where(
 			'client_id', '=', $client_id
 		);
 

@@ -37,7 +37,7 @@ class Kohana_Model_OAuth2_Access_Token
 	 */
 	public static function find_token($access_token, $client_id = NULL)
 	{
-		$query = db::select('*')->from('oauth2_access_tokens')
+		$query = DB::select('*')->from('oauth2_access_tokens')
 			->where('access_token', '=', $access_token)
 			->where('expires', '>=', time());
 

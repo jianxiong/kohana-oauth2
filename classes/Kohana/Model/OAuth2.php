@@ -43,6 +43,8 @@ abstract class Kohana_Model_OAuth2
 	 */
 	protected $_config = NULL;
 
+	protected $_primary_key = "id";
+
 	public function __construct($params = array())
 	{
 		$this->_config = Kohana::$config->load('oauth2');
@@ -96,7 +98,7 @@ abstract class Kohana_Model_OAuth2
 	 */
 	public function pk()
 	{
-		return $this->id;
+		return $this->{$this->_primary_key};
 	}
 
 	/**
@@ -134,7 +136,7 @@ abstract class Kohana_Model_OAuth2
 			// Update
 			DB::update($this->_table_name)
 				->set($this->_data)
-				->where('id', '=', $this->pk())
+				->where($this->_primary_key, '=', $this->pk())
 				->execute();
 
 			$this->_saved = TRUE;
@@ -146,7 +148,7 @@ abstract class Kohana_Model_OAuth2
 				->values(array_values($this->_data))
 				->execute();
 
-			$this->id = $insert_id;
+			$this->{$this->_primary_key} = $insert_id;
 
 			$this->_loaded = TRUE;
 			$this->_saved = TRUE;
@@ -166,7 +168,7 @@ abstract class Kohana_Model_OAuth2
 			return TRUE;
 
 		DB::delete($this->_table_name)
-			->where('id', '=', $this->pk())
+			->where($this->_primary_key, '=', $this->pk())
 			->execute();
 
 		return TRUE;
